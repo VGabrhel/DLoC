@@ -1,4 +1,4 @@
-# Víteček is my bejb
+# 
 # Data wrangling
 #
 
