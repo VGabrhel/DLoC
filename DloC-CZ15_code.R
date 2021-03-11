@@ -186,34 +186,6 @@ summary(DLoC_Drivers_1F,
         fit.measures = TRUE,
         standardized = TRUE)
 
-# McDonald's omega
-DLoC_CFA_Omega <- DLoC_Dataset %>% 
-                  mutate(Driving_Licence = case_when(Q33_1 == 1 | Q33_2 == 1 ~ 'Driving Licence',
-                                     TRUE ~ 'No driving Licence')) %>%
-                  filter(Driving_Licence == 'Driving Licence') %>%
-                  dplyr::select(Q22_2, Q22_4, Q22_11, Q22_13, Q22_22,
-                                Q22_23, Q22_25, Q22_8, Q22_9, Q22_16,
-                                Q22_18, Q22_19, Q22_20, Q22_26, Q22_27)
-
-DLoC_CFA_Omega <- mutate_all(DLoC_CFA_Omega, as.ordered)
-
-DLoC_CFA_Omega[, 8:15] <- lapply(DLoC_CFA_Omega[, 8:15], function(x) { revalue(x,c("0"="5",
-                                                                                   "1"="4",
-                                                                                   "2"="3",
-                                                                                   "3"="2",
-                                                                                   "4"="1",
-                                                                                   "5"="0" ))})
-Start <- Sys.time()
-MBESS::ci.reliability(data=DLoC_CFA_Omega, 
-                      type="categorical", 
-                      conf.level = 0.95, 
-                      interval.type="bca",
-                      B=1000)
-End <- Sys.time()
-Result = End-Start
-Print(Result)
-
-
 # Final SEM ---------------------------------------------------------------
 
 modelDLoC_One_Factor_SEM = '
